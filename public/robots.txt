@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://www.weworkoffice.in/
+
+# Sitemaps
+Sitemap: https://www.weworkoffice.in/sitemap.xml
