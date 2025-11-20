@@ -1,8 +1,6 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import Image from "next/image";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
+import GalleryClient from "../components/gallery/GalleryClient";
 
 const categories = ["All", "Workspaces", "Meeting Rooms", "Amenities", "Lounge", "Common Areas"];
 
@@ -11,26 +9,71 @@ type Gallery = {
   images: string[];
 };
 
-export default function Gallery() {
-  const [selected, setSelected] = useState("All");
-  const [galleryData, setGalleryData] = useState<Gallery[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [showModal, setShowModal] = useState(false);
-  const [currentIndex, setCurrentIndex] = useState(0);
+// Server component - data fetching directly
+async function getGalleryData(): Promise<Gallery[]> {
+  try {
+    const baseUrl = process.env.NODE_ENV === 'production' 
+      ? 'https://weworkoffice.in' 
+      : 'http://localhost:3000';
+    
+    const res = await fetch(`${baseUrl}/api/gallery`, {
+      next: { revalidate: 3600 } // Revalidate every hour
+    });
+    
+    if (!res.ok) {
+      throw new Error('Failed to fetch gallery data');
+    }
+    
+    return await res.json();
+  } catch (error) {
+    console.error("Fetch error:", error);
+    return [];
+  }
+}
 
-  // Fetch gallery data from API
-  useEffect(() => {
-    fetch("/api/gallery")
-      .then((res) => res.json())
-      .then((data: Gallery[]) => {
-        setGalleryData(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("Fetch error:", err);
-        setLoading(false);
-      });
-  }, []);
+// Generate Metadata for SEO
+export async function generateMetadata() {
+  const galleryData = await getGalleryData();
+  const allImages = galleryData.flatMap(item => item.images);
+  
+  return {
+    title: "Gallery - Premium Coworking Spaces | Alfa Business Center Borivali Mumbai",
+    description: "Explore premium coworking spaces, meeting rooms & amenities through our gallery. Virtual tour of Alfa Business Center in Borivali West, Mumbai.",
+    keywords: [
+      "coworking space gallery borivali",
+      "office photos mumbai", 
+      "workspace images borivali west",
+      "alfa business center photos",
+      "meeting room pictures",
+      "virtual tour coworking",
+      "shared office gallery",
+      "business center images borivali",
+      "premium workspace photos mumbai"
+    ],
+    openGraph: {
+      title: "Gallery - Premium Coworking Spaces | Alfa Business Center Borivali Mumbai",
+      description: "Explore premium coworking spaces, meeting rooms & amenities through our gallery. Virtual tour of Alfa Business Center in Borivali West, Mumbai.",
+      images: allImages.length > 0 ? [allImages[0]] : ['/default-gallery.jpg'],
+      url: "https://weworkoffice.in/gallery",
+      type: "website",
+      siteName: "Alfa Business Center",
+      locale: "en_IN",
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: "Gallery - Premium Coworking Spaces | Alfa Business Center Borivali Mumbai",
+      description: "Explore premium coworking spaces, meeting rooms & amenities through our gallery",
+      images: allImages.length > 0 ? [allImages[0]] : ['/default-gallery.jpg'],
+    },
+    alternates: {
+      canonical: 'https://weworkoffice.in/gallery',
+    },
+  };
+}
+
+// Main Server Component
+export default async function GalleryPage() {
+  const galleryData = await getGalleryData();
 
   // Combine all gallery images into a flat array with their category
   const allImages = galleryData.flatMap((item) =>
@@ -40,118 +83,168 @@ export default function Gallery() {
     }))
   );
 
-  // Filter images by selected category
-  const filteredImages = selected === "All"
-    ? allImages
-    : allImages.filter((img) => img.category === selected);
-
-  const handleImageClick = (index: number) => {
-    setCurrentIndex(index);
-    setShowModal(true);
-  };
-
-  const handleNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % filteredImages.length);
-  };
-
-  const handlePrev = () => {
-    setCurrentIndex((prev) => (prev - 1 + filteredImages.length) % filteredImages.length);
+  // Structured Data for Image Gallery
+  const galleryStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "ImageGallery",
+    "name": "Alfa Business Center Gallery - Coworking Space Borivali Mumbai",
+    "description": "Virtual tour of premium coworking spaces, meeting rooms, amenities and facilities at Alfa Business Center Borivali Mumbai",
+    "url": "https://weworkoffice.in/gallery",
+    "mainEntity": {
+      "@type": "ItemList",
+      "numberOfItems": allImages.length,
+      "itemListElement": allImages.map((image, index) => ({
+        "@type": "ListItem",
+        "position": index + 1,
+        "item": {
+          "@type": "ImageObject",
+          "contentUrl": image.url,
+          "name": `${image.category} - Alfa Business Center Borivali Mumbai`,
+          "description": `Premium ${image.category.toLowerCase()} at Alfa Business Center coworking space in Borivali West, Mumbai`,
+          "acquireLicensePage": "https://weworkoffice.in/gallery",
+          "license": "https://weworkoffice.in/terms",
+          "copyrightNotice": "Alfa Business Center",
+          "creator": {
+            "@type": "Organization",
+            "name": "Alfa Business Center"
+          }
+        }
+      }))
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Alfa Business Center",
+      "url": "https://weworkoffice.in",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://weworkoffice.in/logo.png"
+      }
+    },
+    "locationCreated": {
+      "@type": "Place",
+      "name": "Borivali, Mumbai",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Dattani Tower, Mid Wing, Kore Kendra, Borivali (West), next to McDonald",
+        "addressLocality": "Mumbai",
+        "addressRegion": "Maharashtra",
+        "postalCode": "400092",
+        "addressCountry": "IN"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "19.2307",
+        "longitude": "72.8567"
+      }
+    },
+    "datePublished": "2024-01-01",
+    "dateModified": new Date().toISOString().split('T')[0]
   };
 
   return (
-    <section className="py-20 bg-white">
+    <section 
+      className="py-20 bg-white"
+      itemScope
+      itemType="https://schema.org/ImageGallery"
+      aria-label="Image Gallery - Alfa Business Center Coworking Space Borivali Mumbai"
+    >
+      
+      {/* Structured Data for Image Gallery */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(galleryStructuredData) }}
+      />
+
+      <meta itemProp="name" content="Alfa Business Center Gallery - Coworking Spaces Borivali Mumbai" />
+      <meta itemProp="description" content="Explore our premium coworking spaces, meeting rooms, amenities and facilities through our image gallery. Virtual tour of Alfa Business Center in Borivali West, Mumbai." />
+      
       <div className="max-w-7xl mx-auto px-4 text-center">
-        <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
-          Explore Our Vibrant Spaces
-        </h2>
-        <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-10">
-          Discover the dynamic and inspiring environments at Alfa Business Center,
-          meticulously designed for productivity and collaboration.
+        <h1 
+          className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4"
+          itemProp="headline"
+        >
+          Explore Our Premium Coworking Spaces in Borivali Mumbai
+        </h1>
+        <p 
+          className="text-lg text-gray-600 max-w-3xl mx-auto mb-10"
+          itemProp="description"
+        >
+          Take a virtual tour of Alfa Business Center&apos;s dynamic and inspiring environments in Borivali West. 
+          Discover our modern workspaces, fully-equipped meeting rooms, premium amenities, and collaborative 
+          areas designed for productivity and business growth in Mumbai.
         </p>
 
-        {/* Category Tabs */}
-        <div className="flex flex-wrap justify-center gap-2 mb-10">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setSelected(cat)}
-              className={`px-5 py-2 rounded-full border cursor-pointer text-sm font-medium transition ${
-                selected === cat
-                  ? "bg-[#2d386a] text-white"
-                  : "bg-white border-gray-300 text-gray-700 hover:bg-gray-100"
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
-
-        {/* Gallery Grid */}
-        {loading ? (
-          <p className="text-gray-500">Loading...</p>
-        ) : filteredImages.length === 0 ? (
-          <p className="text-gray-500 text-lg">No images available</p>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {filteredImages.map((item, index) => (
-              <div
-                key={index}
-                onClick={() => handleImageClick(index)}
-                className="cursor-pointer rounded-lg overflow-hidden shadow hover:shadow-lg transition"
-              >
-                <Image
-                  src={item.url}
-                  alt={`Gallery ${index + 1}`}
-                  width={400}
-                  height={250}
-                  className="w-full h-[250px] object-cover"
-                />
-              </div>
-            ))}
-          </div>
-        )}
+        {/* ONLY Client Component - No server-rendered images */}
+        <GalleryClient 
+          initialGalleryData={galleryData} 
+          categories={categories}
+        />
       </div>
 
-      {/* Modal Viewer */}
-      {showModal && filteredImages.length > 0 && (
-        <div className="fixed inset-0 bg-black/80 z-50 flex flex-col items-center justify-center p-4">
-          <button
-            onClick={() => setShowModal(false)}
-            className="absolute top-4 cursor-pointer right-4 text-white hover:text-gray-300"
-          >
-            <X size={28} />
-          </button>
+      {/* Hidden SEO Content for Search Engines */}
+      <div className="sr-only" aria-hidden="true">
+        <h2>Virtual Gallery Tour - Alfa Business Center Coworking Space Borivali Mumbai</h2>
+        <p>
+          Explore our comprehensive image gallery showcasing the premium facilities and modern workspaces 
+          at Alfa Business Center in Borivali West, Mumbai. Our visual tour gives you an inside look at 
+          what makes us the preferred coworking destination in Mumbai.
+        </p>
+        
+        <h3>Gallery Categories:</h3>
+        <ul>
+          <li><strong>Workspaces:</strong> Modern desks, private cabins, dedicated workstations with ergonomic furniture at Alfa Business Center Borivali</li>
+          <li><strong>Meeting Rooms:</strong> Fully-equipped conference rooms for presentations and client meetings in Borivali West Mumbai</li>
+          <li><strong>Amenities:</strong> High-speed internet, printing facilities, pantry, and recreational areas at our Borivali coworking space</li>
+          <li><strong>Lounge:</strong> Comfortable seating areas for relaxation and informal meetings at Alfa Business Center Mumbai</li>
+          <li><strong>Common Areas:</strong> Collaborative spaces, reception, and shared facilities in Borivali West</li>
+        </ul>
 
-          <div className="flex items-center justify-between w-full max-w-5xl relative">
-            <button
-              onClick={handlePrev}
-              className="p-2 text-white cursor-pointer hover:text-gray-300"
-            >
-              <ChevronLeft size={32} />
-            </button>
+        <h3>Featured Spaces at Alfa Business Center Borivali:</h3>
+        <p>
+          Located in Dattani Tower, Kore Kendra, Borivali West, our coworking space offers:
+        </p>
+        <ul>
+          <li>Modern and professionally designed workspaces in Borivali Mumbai</li>
+          <li>Fully-equipped meeting and conference rooms for business meetings</li>
+          <li>High-speed fiber internet connectivity throughout the workspace</li>
+          <li>Comfortable lounge and breakout areas for networking</li>
+          <li>Professional reception and administrative support services</li>
+          <li>24/7 security and surveillance systems for safety</li>
+          <li>Pantry with complimentary refreshments and beverages</li>
+          <li>Printing and scanning facilities for business needs</li>
+          <li>Private cabins for focused work and team collaboration</li>
+          <li>Hot desks for flexible working arrangements</li>
+        </ul>
 
-            <div className="flex flex-col items-center max-w-3xl w-full">
-              <Image
-                src={filteredImages[currentIndex].url}
-                alt="Preview"
-                width={1000}
-                height={600}
-                className="w-full h-auto max-h-[80vh] object-contain rounded-lg"
-              />
-              <p className="text-white mt-2 text-sm">
-                Image {currentIndex + 1} of {filteredImages.length}
-              </p>
-            </div>
+        <p>
+          <strong>Location Advantage:</strong> Our Borivali coworking space is strategically located 
+          next to McDonald&apos;s in Borivali West, providing easy access to public transportation, 
+          restaurants, banks, and other essential amenities in Mumbai. The location offers excellent 
+          connectivity to both western and central Mumbai.
+        </p>
 
-            <button
-              onClick={handleNext}
-              className="p-2 text-white cursor-pointer hover:text-gray-300"
-            >
-              <ChevronRight size={32} />
-            </button>
-          </div>
-        </div>
-      )}
+        <p>
+          <strong>Why Choose Alfa Business Center Gallery?</strong> Our image gallery provides a 
+          comprehensive virtual tour of what makes us the best coworking space in Borivali Mumbai. 
+          From ergonomic workspaces to state-of-the-art meeting rooms, every aspect is designed to 
+          enhance productivity and business growth.
+        </p>
+
+        <p>
+          Keywords: coworking space gallery borivali, office photos mumbai, workspace images borivali west, 
+          alfa business center photos, meeting room pictures, virtual tour coworking, shared office gallery, 
+          business center images borivali, premium workspace photos mumbai, borivali west coworking space images,
+          alfa business center virtual tour, professional workspace gallery borivali, mumbai office space photos,
+          modern coworking facility images, borivali business center gallery
+        </p>
+
+        <p>
+          <strong>Image Gallery SEO Terms:</strong> visual tour coworking borivali, workspace photography mumbai, 
+          office space images, meeting room gallery, business center photos, shared workspace visuals, 
+          alfa business center gallery, borivali west coworking pictures, mumbai office gallery, 
+          professional workspace photography, corporate office images borivali
+        </p>
+      </div>
     </section>
   );
 }

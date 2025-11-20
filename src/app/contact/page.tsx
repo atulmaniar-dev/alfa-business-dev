@@ -72,33 +72,110 @@ export default function ContactUsPage() {
     }
   };
 
+  // Structured Data for Contact Page
+  const contactStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "name": "Contact Alfa Business Center - Coworking Space Borivali Mumbai",
+    "description": "Get in touch with Alfa Business Center for premium coworking spaces, private cabins, meeting rooms and virtual office solutions in Borivali Mumbai",
+    "url": "https://weworkoffice.in/contact",
+    "mainEntity": {
+      "@type": "Organization",
+      "name": "Alfa Business Center",
+      "description": "Premium coworking space in Borivali Mumbai offering flexible workspace solutions",
+      "url": "https://weworkoffice.in",
+      "telephone": "+91-98201-90836",
+      "email": "info@alfaesol.com",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Dattani Tower, Mid Wing, Kore Kendra, Borivali (West), next to McDonald",
+        "addressLocality": "Mumbai",
+        "addressRegion": "Maharashtra",
+        "postalCode": "400092",
+        "addressCountry": "IN"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "19.2307",
+        "longitude": "72.8567"
+      },
+      "openingHours": "Mo-Fr 09:00-18:00, Sa 09:00-14:00",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+91-98201-90836",
+        "email": "info@alfaesol.com",
+        "contactType": "customer service",
+        "areaServed": "IN",
+        "availableLanguage": ["English", "Hindi", "Marathi"]
+      }
+    }
+  };
+
   return (
     <>
+      {/* Structured Data for Contact Page */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(contactStructuredData) }}
+      />
+
       <ContactBanner />
 
-      <section className="pt-16 bg-white">
+      <section 
+        className="pt-16 bg-white"
+        itemScope
+        itemType="https://schema.org/ContactPage"
+        aria-label="Contact Alfa Business Center - Coworking Space Borivali Mumbai"
+      >
+        <meta itemProp="name" content="Contact Alfa Business Center - Premium Coworking Space Borivali Mumbai" />
+        <meta itemProp="description" content="Get in touch with Alfa Business Center for coworking spaces, private offices, meeting rooms and virtual office solutions in Borivali West Mumbai" />
+        
         <div className="max-w-7xl mx-auto px-4 mb-16">
           <div className="border border-gray-300 rounded-xl shadow-sm p-6 sm:p-8 md:p-10 bg-white">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
               {/* Left: Contact Form */}
               <div>
-                <h2 className="text-2xl sm:text-3xl font-bold text-[#2d386a] mb-6">Send Us a Message</h2>
-                <form className="space-y-5" onSubmit={handleSubmit}>
+                <h1 className="text-2xl sm:text-3xl font-bold text-[#2d386a] mb-2">
+                  Contact Alfa Business Center - Coworking Space Borivali Mumbai
+                </h1>
+                <p className="text-gray-600 mb-6">
+                  Get in touch with us for premium coworking spaces, private cabins, meeting rooms 
+                  and virtual office solutions in Borivali West, Mumbai.
+                </p>
+                
+                <form 
+                  className="space-y-5" 
+                  onSubmit={handleSubmit}
+                  itemScope
+                  itemType="https://schema.org/ContactPoint"
+                >
+                  <meta itemProp="email" content="info@alfaesol.com" />
+                  <meta itemProp="telephone" content="+91-98201-90836" />
+                  <meta itemProp="areaServed" content="Borivali Mumbai" />
+                  
                   <div>
-                    <label className="block text-sm font-medium text-black">Name *</label>
+                    <label htmlFor="name" className="block text-sm font-medium text-black">
+                      Your Name *
+                    </label>
                     <input
+                      id="name"
                       type="text"
                       name="name"
                       value={form.name}
                       onChange={handleChange}
-                      placeholder="Enter your name"
+                      placeholder="Enter your full name"
                       required
                       className="w-full border border-gray-300 rounded-md px-4 py-2 mt-1 focus:ring-2 focus:ring-[#2d386a] focus:outline-none"
+                      aria-required="true"
                     />
                   </div>
+                  
                   <div>
-                    <label className="block text-sm font-medium text-black">Email *</label>
+                    <label htmlFor="email" className="block text-sm font-medium text-black">
+                      Email Address *
+                    </label>
                     <input
+                      id="email"
                       type="email"
                       name="email"
                       value={form.email}
@@ -106,11 +183,16 @@ export default function ContactUsPage() {
                       placeholder="your@email.com"
                       required
                       className="w-full border border-gray-300 rounded-md px-4 py-2 mt-1 focus:ring-2 focus:ring-[#2d386a] focus:outline-none"
+                      aria-required="true"
                     />
                   </div>
+                  
                   <div>
-                    <label className="block text-sm font-medium text-black">Phone Number</label>
+                    <label htmlFor="number" className="block text-sm font-medium text-black">
+                      Phone Number
+                    </label>
                     <input
+                      id="number"
                       type="tel"
                       name="number"
                       value={form.number}
@@ -119,16 +201,21 @@ export default function ContactUsPage() {
                       className="w-full border border-gray-300 rounded-md px-4 py-2 mt-1 focus:ring-2 focus:ring-[#2d386a] focus:outline-none"
                     />
                   </div>
+                  
                   <div>
-                    <label className="block text-sm font-medium text-black">Message *</label>
+                    <label htmlFor="message" className="block text-sm font-medium text-black">
+                      Your Message *
+                    </label>
                     <textarea
+                      id="message"
                       name="message"
                       value={form.message}
                       onChange={handleChange}
                       rows={5}
-                      placeholder="Enter your question or feedback"
+                      placeholder="Tell us about your workspace requirements, preferred plan, or schedule a tour of our Borivali coworking space"
                       required
                       className="w-full border border-gray-300 h-24 rounded-md px-4 py-2 mt-1 focus:ring-2 focus:ring-[#2d386a] focus:outline-none"
+                      aria-required="true"
                     />
                   </div>
 
@@ -140,6 +227,7 @@ export default function ContactUsPage() {
                     disabled={isSubmitting}
                     className={`inline-flex items-center gap-2 cursor-pointer bg-[#2d386a] text-white px-6 py-2 rounded-md hover:bg-[#1f2a4e] transition ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
                       }`}
+                    aria-label={isSubmitting ? 'Sending your message' : 'Send message to Alfa Business Center'}
                   >
                     {isSubmitting ? 'Sending...' : 'Send Message'}
                     {!isSubmitting && <span className="text-xl">→</span>}
@@ -157,65 +245,157 @@ export default function ContactUsPage() {
                 </form>
               </div>
 
-             {/* Right: Map & Info */}
-<div className="space-y-6">
-  <div className="rounded-lg overflow-hidden h-64 border border-gray-300">
-    <iframe
-      src="https://maps.google.com/maps?q=Alfa%20Business%20Center,%20Mumbai&t=&z=15&ie=UTF8&iwloc=&output=embed"
-      width="100%"
-      height="100%"
-      frameBorder="0"
-      style={{ border: 0 }}
-      allowFullScreen
-    ></iframe>
-  </div>
+              {/* Right: Map & Info */}
+              <div 
+                className="space-y-6"
+                itemScope
+                itemType="https://schema.org/Organization"
+              >
+                <div className="rounded-lg overflow-hidden h-64 border border-gray-300">
+                  <iframe
+                    src="https://maps.google.com/maps?q=Alfa%20Business%20Center,%20Mumbai&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                    width="100%"
+                    height="100%"
+                    frameBorder="0"
+                    style={{ border: 0 }}
+                    allowFullScreen
+                    title="Alfa Business Center Location Map - Coworking Space Borivali Mumbai"
+                    aria-label="Interactive map showing Alfa Business Center location in Borivali West Mumbai"
+                  ></iframe>
+                </div>
 
-  <div>
-    <h3 className="text-lg sm:text-xl font-semibold text-black mb-3">
-      Our Location & Contact Info
-    </h3>
-    <ul className="space-y-4 text-sm text-black">
-      {/* Address → Google Maps Link */}
-      <li className="flex items-start gap-3">
-        <MapPin className="text-[#2d386a] w-5 h-5 mt-0.5" />
-        <a
-          href="https://maps.google.com/?q=Dattani Tower, Mid Wing, Kore Kendra, Borivali (West), next to McDonald, Mumbai, Maharashtra 400092"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hover:underline"
-        >
-          Dattani Tower, Mid Wing, Kore Kendra, Borivali (West), next to
-          McDonald, Mumbai, Maharashtra 400092
-        </a>
-      </li>
+                <div>
+                  <h2 className="text-lg sm:text-xl font-semibold text-black mb-3">
+                    Visit Our Coworking Space in Borivali Mumbai
+                  </h2>
+                  <ul className="space-y-4 text-sm text-black">
+                    {/* Address → Google Maps Link */}
+                    <li className="flex items-start gap-3">
+                      <MapPin className="text-[#2d386a] w-5 h-5 mt-0.5" />
+                      <div itemProp="address" itemScope itemType="https://schema.org/PostalAddress">
+                        <a
+                          href="https://maps.google.com/?q=Dattani Tower, Mid Wing, Kore Kendra, Borivali (West), next to McDonald, Mumbai, Maharashtra 400092"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="hover:underline"
+                          itemProp="streetAddress"
+                        >
+                          Dattani Tower, Mid Wing, Kore Kendra, Borivali (West), next to McDonald, 
+                          <span itemProp="addressLocality"> Mumbai</span>, 
+                          <span itemProp="addressRegion"> Maharashtra</span>
+                          <span itemProp="postalCode"> 400092</span>
+                        </a>
+                      </div>
+                    </li>
 
-      {/* Phone → Click to Call */}
-      <li className="flex items-center gap-3">
-        <Phone className="text-[#2d386a] w-5 h-5" />
-        <a
-          href="tel:+919820190836"
-          className="hover:underline"
-        >
-          +91 98201 90836
-        </a>
-      </li>
+                    {/* Phone → Click to Call */}
+                    <li className="flex items-center gap-3">
+                      <Phone className="text-[#2d386a] w-5 h-5" />
+                      <a
+                        href="tel:+919820190836"
+                        className="hover:underline"
+                        itemProp="telephone"
+                      >
+                        +91 98201 90836
+                      </a>
+                    </li>
 
-      {/* Email → Click to Mail */}
-      <li className="flex items-center gap-3">
-        <Mail className="text-[#2d386a] w-5 h-5" />
-        <a
-          href="mailto:info@alfaesol.com"
-          className="hover:underline"
-        >
-          info@alfaesol.com
-        </a>
-      </li>
-    </ul>
-  </div>
-</div>
+                    {/* Email → Click to Mail */}
+                    <li className="flex items-center gap-3">
+                      <Mail className="text-[#2d386a] w-5 h-5" />
+                      <a
+                        href="mailto:info@alfaesol.com"
+                        className="hover:underline"
+                        itemProp="email"
+                      >
+                        info@alfaesol.com
+                      </a>
+                    </li>
+                  </ul>
 
+                  {/* Business Hours */}
+                  <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+                    <h3 className="font-semibold text-black mb-2">Business Hours</h3>
+                    <ul className="text-sm text-black space-y-1">
+                      <li className="flex justify-between">
+                        <span>Monday - Friday:</span>
+                        <span>9:00 AM - 6:00 PM</span>
+                      </li>
+                      <li className="flex justify-between">
+                        <span>Saturday:</span>
+                        <span>9:00 AM - 2:00 PM</span>
+                      </li>
+                      <li className="flex justify-between">
+                        <span>Sunday:</span>
+                        <span>Closed</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
+        </div>
+
+        {/* Hidden SEO Content for Search Engines */}
+        <div className="sr-only" aria-hidden="true">
+          <h2>Contact Alfa Business Center - Premium Coworking Space Borivali Mumbai</h2>
+          <p>
+            Get in touch with Alfa Business Center, the premier coworking space in Borivali West, Mumbai. 
+            We offer flexible workspace solutions including private cabins, dedicated desks, hot desks, 
+            meeting rooms, and virtual office services.
+          </p>
+          
+          <h3>Why Contact Alfa Business Center?</h3>
+          <p>
+            Located in the heart of Borivali West at Dattani Tower, Kore Kendra, Alfa Business Center 
+            provides professionals, startups, and enterprises with premium workspace solutions. 
+            Our modern facilities and strategic location make us the ideal choice for businesses in Mumbai.
+          </p>
+
+          <h3>Our Coworking Solutions:</h3>
+          <ul>
+            <li><strong>Private Cabins:</strong> Fully enclosed offices for teams of 2-10 people</li>
+            <li><strong>Dedicated Desks:</strong> Personal workspace with storage facilities</li>
+            <li><strong>Hot Desks:</strong> Flexible seating in shared workspace areas</li>
+            <li><strong>Meeting Rooms:</strong> Hourly and daily rental of professional meeting spaces</li>
+            <li><strong>Virtual Offices:</strong> Premium business address with mail handling services</li>
+            <li><strong>Day Passes:</strong> Flexible daily workspace access</li>
+          </ul>
+
+          <h3>Location & Accessibility:</h3>
+          <p>
+            Our Borivali coworking space is strategically located next to McDonald's in Borivali West, 
+            providing excellent connectivity to both western and central Mumbai. Easily accessible via 
+            public transportation including Borivali railway station and local bus routes.
+          </p>
+
+          <h3>Contact Information:</h3>
+          <p>
+            <strong>Address:</strong> Dattani Tower, Mid Wing, Kore Kendra, Borivali (West), next to McDonald, Mumbai, Maharashtra 400092<br/>
+            <strong>Phone:</strong> +91-98201-90836<br/>
+            <strong>Email:</strong> info@alfaesol.com<br/>
+            <strong>Business Hours:</strong> Monday-Friday: 9:00 AM - 6:00 PM, Saturday: 9:00 AM - 2:00 PM
+          </p>
+
+          <h3>Get Started Today:</h3>
+          <p>
+            Whether you're looking for a private office, flexible coworking space, meeting room rental, 
+            or virtual office solution in Borivali Mumbai, our team is ready to assist you. 
+            Contact us to schedule a tour, discuss your requirements, or get pricing information.
+          </p>
+
+          <p>
+            Keywords: contact alfa business center borivali, coworking space contact mumbai, 
+            office space inquiry borivali west, business center phone number, virtual office contact, 
+            meeting room booking borivali, private cabin inquiry mumbai, workspace solutions contact, 
+            alfa business center email, borivali coworking space phone number
+          </p>
+
+          <p>
+            <strong>Additional Contact Methods:</strong> WhatsApp business messaging, in-person consultations, 
+            virtual tours, customized workspace solutions, corporate package inquiries, startup special offers
+          </p>
         </div>
       </section>
     </>

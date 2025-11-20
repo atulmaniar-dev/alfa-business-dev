@@ -1,21 +1,39 @@
 {
-  "name": "alfa-business",
-  "version": "0.1.0",
+  "name": "alfa-business-center",
+  "version": "1.0.0",
   "private": true,
+  "description": "Alfa Business Center - Premium Coworking Space in Borivali Mumbai offering flexible workspace solutions, private cabins, meeting rooms and virtual offices",
+  "keywords": [
+    "coworking space borivali",
+    "office space mumbai",
+    "shared workspace borivali",
+    "business center mumbai",
+    "virtual office borivali",
+    "meeting rooms mumbai",
+    "private cabins borivali",
+    "alfa business center"
+  ],
+  "author": "Alfa Business Center <info@alfaesol.com>",
+  "homepage": "https://weworkoffice.in",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "cross-env NEXT_IGNORE_TYPE_ERRORS=true next build",
     "start": "next start",
     "lint": "next lint",
     "postbuild": "next-sitemap",
-    "clean": "rimraf .next node_modules/.cache"
+    "clean": "rimraf .next node_modules/.cache",
+    "analyze": "cross-env ANALYZE=true next build",
+    "export": "next export"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.3",
+    "autoprefixer": "^10.4.22",
     "bcryptjs": "^3.0.2",
     "class-variance-authority": "^0.7.1",
     "cloudinary": "^2.7.0",
     "clsx": "^2.1.1",
+    "critters": "^0.0.23",
+    "cssnano": "^7.1.2",
     "dotenv": "^17.2.0",
     "formidable": "^3.5.4",
     "jsonwebtoken": "^9.0.2",
@@ -39,6 +57,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@next/bundle-analyzer": "^15.4.1",
     "@tailwindcss/postcss": "^4",
     "@types/formidable": "^3.4.5",
     "@types/jsonwebtoken": "^9.0.10",
@@ -49,7 +68,11 @@
     "cross-env": "^10.0.0",
     "eslint": "^9",
     "eslint-config-next": "15.4.1",
+    "rimraf": "^5.0.5",
     "tailwindcss": "^4",
     "typescript": "^5.4.5"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
