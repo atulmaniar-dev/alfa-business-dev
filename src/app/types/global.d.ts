@@ -1,62 +1,16 @@
-// Global TypeScript definitions for SEO
+// Global TypeScript declarations for third-party libraries
 
-declare global {
-  interface Window {
-    gtag: (...args: any[]) => void;
-  }
-}
-
-// Cloudinary Image Type
-interface CloudinaryImage {
-  public_id: string;
-  url: string;
-  format: string;
-  width: number;
-  height: number;
-}
-
-// SEO Metadata Type
-interface SEOMetadata {
-  title: string;
-  description: string;
-  keywords: string[];
-  openGraph?: {
-    title: string;
-    description: string;
-    images: string[];
-    url: string;
-    type: string;
+interface Window {
+  grecaptcha: {
+    ready: (callback: () => void) => void;
+    execute: (siteKey: string, options: { action: string }) => Promise<string>;
+    render: (container: string | Element, parameters: any) => number;
   };
 }
 
-// Plan Type for Coworking
-interface PlanType {
-  _id: string;
-  title: string;
-  slug: string;
-  monthlyPrice: number;
-  yearlyPrice?: number;
-  description: string;
-  monthlyFeatures: string[];
-  yearlyFeatures?: string[];
-  images: string[];
-  available: boolean;
-  popular?: boolean;
+// Google reCAPTCHA types
+declare namespace grecaptcha {
+  function ready(callback: () => void): void;
+  function execute(siteKey: string, options: { action: string }): Promise<string>;
+  function render(container: string | Element, parameters: any): number;
 }
-
-// Amenity Type
-interface AmenityType {
-  _id: string;
-  amenitiesName: string;
-  tag: string;
-  description: string;
-  image: string[];
-}
-
-// Gallery Type
-interface GalleryType {
-  imageType: string;
-  images: string[];
-}
-
-export {};

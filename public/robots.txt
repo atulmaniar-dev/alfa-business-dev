@@ -1,9 +1,14 @@
 # *
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /api/
+Disallow: /_next/
+Disallow: /404
 
 # Host
-Host: https://www.weworkoffice.in/
+Host: https://weworkoffice.in
 
 # Sitemaps
-Sitemap: https://www.weworkoffice.in/sitemap.xml
+Sitemap: https://weworkoffice.in/sitemap.xml
+Sitemap: https://weworkoffice.in/sitemap-0.xml
