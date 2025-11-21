@@ -2,9 +2,13 @@
 module.exports = {
   siteUrl: 'https://weworkoffice.in',
   generateRobotsTxt: true,
-  sitemapSize: 7000,
+
+  // Force single sitemap
+  sitemapSize: 5000,
+
   changefreq: 'weekly',
   priority: 0.7,
+
   robotsTxtOptions: {
     policies: [
       {
@@ -13,10 +17,8 @@ module.exports = {
         disallow: ['/admin', '/api/', '/_next/', '/404'],
       },
     ],
-    additionalSitemaps: [
-      'https://weworkoffice.in/sitemap-0.xml',
-    ],
   },
+
   exclude: [
     '/admin/*',
     '/api/*',
@@ -24,8 +26,8 @@ module.exports = {
     '/500',
     '/server-sitemap.xml'
   ],
+
   transform: async (config, path) => {
-    // Custom priority based on page importance
     let priority = config.priority;
     let changefreq = config.changefreq;
 
