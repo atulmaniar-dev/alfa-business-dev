@@ -1,6 +1,7 @@
 import './globals.css'
 import { Toaster } from 'sonner'
 import LayoutWrapper from '@/app/components/layout/LayoutWrapper'
+import { Analytics } from "@vercel/analytics/next"
 
 export const metadata = {
   title: {
@@ -159,7 +160,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body suppressHydrationWarning={true}>
         <Toaster />
         <LayoutWrapper>{children}</LayoutWrapper>
-        
+        <Analytics />
         {/* Floating WhatsApp Button with better accessibility */}
         <a
           href="https://wa.me/919820190836?text=Hi%20Alfa%20Team%2C%20I%27m%20interested%20in%20your%20coworking%20space%20in%20Borivali%2C%20Mumbai."

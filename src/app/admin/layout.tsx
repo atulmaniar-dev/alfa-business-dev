@@ -59,7 +59,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   if (isLoginPage) return <div className="min-h-screen">{children}</div>;
 
-  if (!isLoggedIn) {
+  if (!isLoggedIn && !isLoginPage) {
     return (
       <div className="h-screen flex items-center justify-center text-center">
         <div>
@@ -70,6 +70,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       </div>
     );
   }
+
+
 
   return (
     <div className="h-screen flex flex-col bg-gray-100">
