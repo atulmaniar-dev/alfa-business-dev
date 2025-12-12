@@ -132,14 +132,14 @@ export default function ContactDetails() {
                     {row.status !== 'done' && (
                       <button
                         onClick={() => handleDone(row._id)}
-                        className="px-2 py-1 bg-black-100 text-white-700 text-xs rounded"
+                        className="px-2 cursor-pointer py-1 bg-black-100 text-white-700 text-xs rounded"
                       >
                         Mark as Done
                       </button>
                     )}
                     <button
                       onClick={() => handleDelete(row._id, row.name)}
-                      className="px-2 py-1 bg-red-100 text-red-700 text-xs rounded hover:bg-red-200"
+                      className="px-2 cursor-pointer py-1 bg-red-100 text-red-700 text-xs rounded hover:bg-red-200"
                     >
                       Delete
                     </button>

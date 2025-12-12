@@ -112,7 +112,7 @@ export default function EditAmenity() {
         <h1 className="text-3xl font-semibold text-[#2d386a]">Edit Amenity</h1>
         <button
           onClick={() => router.back()}
-          className="text-sm px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded"
+          className="text-sm cursor-pointer px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded"
         >
           ← Back
         </button>
@@ -160,7 +160,7 @@ export default function EditAmenity() {
                   setImageFile(null);
                   setForm(prev => ({ ...prev, imageUrl: initialImageUrl }));
                 }}
-                className="absolute top-1 right-1 bg-white text-red-500 border border-gray-300 rounded-full w-5 h-5 text-xs flex items-center justify-center"
+                className="absolute cursor-pointer top-1 right-1 bg-white text-red-500 border border-gray-300 rounded-full w-5 h-5 text-xs flex items-center justify-center"
               >
                 ×
               </button>
@@ -172,7 +172,7 @@ export default function EditAmenity() {
           <button
             type="reset"
             onClick={() => router.refresh()}
-            className="px-6 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100"
+            className="px-6 py-2 cursor-pointer border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100"
             disabled={isSubmitting}
           >
             Cancel
@@ -180,7 +180,7 @@ export default function EditAmenity() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className={`px-6 py-2 flex items-center justify-center gap-2 rounded-md text-white transition-colors ${
+            className={`px-6 cursor-pointer py-2 flex items-center justify-center gap-2 rounded-md text-white transition-colors ${
               isSubmitting
                 ? 'bg-[#2d386a] cursor-not-allowed opacity-75'
                 : 'bg-[#2d386a] hover:bg-[#1f2950]'

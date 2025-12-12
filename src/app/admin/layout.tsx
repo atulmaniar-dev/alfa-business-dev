@@ -14,7 +14,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const [loading, setLoading] = useState(true);
   const sidebarRef = useRef<HTMLDivElement>(null);
 
-  const isLoginPage = pathname === '/admin/login';
+  const isLoginPage = pathname.startsWith('/admin/login');
+
 
   useEffect(() => {
     if (isLoginPage) {

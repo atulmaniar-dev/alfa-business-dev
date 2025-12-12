@@ -211,7 +211,7 @@ images: [...existingImages, ...imageFiles.map(() => 'https://dummy.image')],  })
         <h1 className="text-3xl font-semibold text-[#2d386a]">
           {initialData ? 'Edit Pricing Plan' : 'Add Pricing Plan'}
         </h1>
-        <button onClick={() => router.back()} className="text-sm px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded">
+        <button onClick={() => router.back()} className="text-sm cursor-pointer px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded">
           ← Back
         </button>
       </div>
@@ -338,7 +338,7 @@ images: [...existingImages, ...imageFiles.map(() => 'https://dummy.image')],  })
                   <button
                     type="button"
                     onClick={() => removeExistingImage(idx)}
-                    className="absolute top-1 right-1 bg-white text-red-500 border border-gray-300 rounded-full w-5 h-5 text-xs flex items-center justify-center"
+                    className="absolute cursor-pointer top-1 right-1 bg-white text-red-500 border border-gray-300 rounded-full w-5 h-5 text-xs flex items-center justify-center"
                   >
                     ×
                   </button>
@@ -350,7 +350,7 @@ images: [...existingImages, ...imageFiles.map(() => 'https://dummy.image')],  })
                   <button
                     type="button"
                     onClick={() => removeImage(idx)}
-                    className="absolute top-1 right-1 bg-white text-red-500 border border-gray-300 rounded-full w-5 h-5 text-xs flex items-center justify-center"
+                    className="absolute top-1 cursor-pointer right-1 bg-white text-red-500 border border-gray-300 rounded-full w-5 h-5 text-xs flex items-center justify-center"
                   >
                     ×
                   </button>
@@ -365,7 +365,7 @@ images: [...existingImages, ...imageFiles.map(() => 'https://dummy.image')],  })
           <button
             type="reset"
             onClick={() => router.refresh()}
-            className="px-6 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100"
+            className="px-6 py-2 cursor-pointer border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100"
             disabled={isSubmitting}
           >
             Cancel
@@ -373,7 +373,7 @@ images: [...existingImages, ...imageFiles.map(() => 'https://dummy.image')],  })
           <button
             type="submit"
             disabled={isSubmitting}
-            className={`px-6 py-2 flex items-center justify-center gap-2 rounded-md text-white transition-colors ${isSubmitting
+            className={`px-6 py-2 cursor-pointer flex items-center justify-center gap-2 rounded-md text-white transition-colors ${isSubmitting
               ? 'bg-[#2d386a] cursor-not-allowed opacity-75'
               : 'bg-[#2d386a] hover:bg-[#1f2950]'
               }`}
@@ -519,7 +519,7 @@ function FeatureTagInput({
           {tags.length > 0 ? tags.map((tag) => (
             <span key={tag} className="bg-[#2d386a]/10 text-[#2d386a] text-sm px-3 py-1 rounded-full flex items-center gap-2">
               {tag}
-              <button type="button" onClick={() => onRemove(tag)} className="text-xs text-red-500 hover:text-red-700 font-bold">×</button>
+              <button type="button" onClick={() => onRemove(tag)} className="text-xs cursor-pointer text-red-500 hover:text-red-700 font-bold">×</button>
             </span>
           )) : <p className="text-sm text-gray-400 italic">No features added</p>}
         </div>
@@ -535,7 +535,7 @@ function FeatureTagInput({
           <button
             type="button"
             onClick={onAdd}
-            className="text-sm bg-[#2d386a] hover:bg-[#1e2a4d] text-white px-4 py-2 rounded-md transition"
+            className="text-sm bg-[#2d386a] cursor-pointer hover:bg-[#1e2a4d] text-white px-4 py-2 rounded-md transition"
           >
             Add
           </button>

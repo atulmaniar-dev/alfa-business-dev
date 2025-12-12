@@ -6,6 +6,7 @@ import {
   Menu,
   Bell,
   Search,
+  User
 } from 'lucide-react';
 import Image from 'next/image';
 
@@ -18,7 +19,7 @@ export default function AdminNavbar({ toggleSidebar }: { toggleSidebar: () => vo
       <div className="flex items-center space-x-3">
         <button
           onClick={toggleSidebar}
-          className="text-gray-600 hover:text-[#2d386a] transition p-2"
+          className="text-gray-600 cursor-pointer hover:text-[#2d386a] transition p-2"
         >
           <Menu size={22} />
         </button>
@@ -42,7 +43,7 @@ export default function AdminNavbar({ toggleSidebar }: { toggleSidebar: () => vo
         </button> */} 
 
         {/* Avatar */}
-        <div className="w-12 h-12 rounded-full overflow-hidden border border-gray-300">
+        {/* <div className="w-12 h-12 rounded-full overflow-hidden border border-gray-300">
           <Image
             src="/woman1.avif" // replace with actual avatar or placeholder
             alt="Admin"
@@ -50,7 +51,12 @@ export default function AdminNavbar({ toggleSidebar }: { toggleSidebar: () => vo
             height={100}
             className="object-cover"
           />
-        </div>
+        </div> */}
+
+        <div className="relative w-12 h-12 rounded-full bg-gradient-to-br from-gray-100 to-gray-200 border-2 border-white shadow-sm flex items-center justify-center">
+  <User className="h-6 w-6 text-gray-600" />
+  <div className="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-green-500 border-2 border-white"></div>
+</div>
       </div>
     </header>
   );

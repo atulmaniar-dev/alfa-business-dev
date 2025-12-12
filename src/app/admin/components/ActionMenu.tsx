@@ -24,7 +24,7 @@ export default function ActionMenu({
 
   return (
     <div className="relative inline-block text-left" ref={ref}>
-      <button onClick={() => setOpen(!open)} className="text-gray-500 hover:text-gray-700">
+      <button onClick={() => setOpen(!open)} className="text-gray-500 cursor-pointer hover:text-gray-700">
         <MoreVertical size={20} />
       </button>
 
@@ -35,7 +35,7 @@ export default function ActionMenu({
               onEdit();
               setOpen(false);
             }}
-            className="w-full px-3 py-2 text-sm text-left hover:bg-gray-100"
+            className="w-full cursor-pointer px-3 py-2 text-sm text-left hover:bg-gray-100"
           >
             <Edit size={16} className="inline mr-2" />
             Edit
@@ -45,7 +45,7 @@ export default function ActionMenu({
               onDelete();
               setOpen(false);
             }}
-            className="w-full px-3 py-2 text-sm text-left text-red-600 hover:bg-red-100"
+            className="w-full cursor-pointer px-3 py-2 text-sm text-left text-red-600 hover:bg-red-100"
           >
             <Trash2 size={16} className="inline mr-2" />
             Delete

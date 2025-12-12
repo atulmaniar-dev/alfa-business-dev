@@ -93,7 +93,7 @@ export default function AmenitiesPage() {
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-1xl md:text-4xl font-bold">Amenities Management</h2>
         <button
-          className="flex items-center bg-[#2d386a] text-white px-4 py-2 rounded text-sm"
+          className="flex cursor-pointer items-center bg-[#2d386a] text-white px-4 py-2 rounded text-sm"
           onClick={() => router.push('/admin/amenities/add')}
         >
           <PlusCircle className="mx-2" /> Add New Amenity
@@ -122,14 +122,14 @@ export default function AmenitiesPage() {
                 <div className="flex justify-between">
                   <button
                     onClick={() => handleEdit(amenity.slug || amenity._id)}
-                    className="text-sm text-[#2d386a] font-medium"
+                    className="text-sm cursor-pointer text-[#2d386a] font-medium"
                   >
                     ✏ Edit
                   </button>
 
                   <button
                     onClick={() => handleDelete(amenity.slug || amenity._id)}
-                    className="text-sm text-red-500 font-medium"
+                    className="text-sm cursor-pointer text-red-500 font-medium"
                   >
                     🗑 Delete
                   </button>
